@@ -1,0 +1,19 @@
+{
+  "name": "backend-twitter-scraping",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "serverless deploy -v",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "serverless package --package my-artifacts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-python-requirements": "5.1.1",
+    "serverless-prune-plugin": "1.5.1",
+    "serverless": "1.83.3"
+  }
+}

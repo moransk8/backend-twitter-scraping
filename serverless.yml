@@ -1,0 +1,61 @@
+service: &service
+  name: backend-twitter-scraping
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  profile: david
+  stage: dev
+#  logRetentionInDays: ${file(ServerlessScripts.js):logRetentionInDays.${env:USRV_STAGE}}
+#  environment:
+#    SEND_TO_DATADOG: ON
+#  iamRoleStatements:
+#    - Effect: "Allow"
+#      Action:
+#        - ssm:GetParameter
+#        - ssm:GetParameters
+#        - ssm:GetParametersByPath
+#      Resource: "*"
+plugins:
+  - serverless-python-requirements
+  - serverless-prune-plugin
+
+custom:
+  service: *service
+#  prefix: /${self:provider.stage}/${self:custom.service.name}
+#  tagEnv:
+#    ci: TESTING
+#    qa: TESTING
+#    uat: TESTING
+#    stg: TESTING
+#    primary: PRODUCTION
+#  deploymentSettings:
+#    stages:
+#      - ci
+#      - qa
+#      - stg
+#      - uat
+#      - primary
+#    type: ${file(ServerlessScripts.js):canaryDeploymentType.${env:USRV_STAGE}}
+#    alias: Live
+  pythonRequirements:
+    dockerizePip: false
+    slim: true
+
+# you can add packaging information here
+#package:
+#  patterns:
+#    - '!exclude-me.py'
+#    - '!exclude-me-dir/**'
+#    - include-me.py
+#    - include-me-dir/**
+
+functions:
+  checkResources:
+    handler: handler.scraping_handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+    timeout: 30
