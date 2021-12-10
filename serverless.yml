@@ -42,6 +42,7 @@ custom:
   pythonRequirements:
     dockerizePip: false
     slim: true
+    pythonBin: python3
 
 # you can add packaging information here
 #package:
