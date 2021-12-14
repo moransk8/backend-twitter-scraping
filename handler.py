@@ -8,15 +8,9 @@ logger = logging.getLogger()
 def scraping_handler(event, context):
     logger.warning(context)
     tw_list = scraping_twitter(event)
-    print(len(tw_list))
-    for x in range(len(tw_list)):
-        print(tw_list[x])
-    body = {
-        "message": "Ok"
-    }
     response = {
         "statusCode": 200,
-        "body": json.dumps(body)
+        "body": json.dumps(tw_list)
     }
 
     return response

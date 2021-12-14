@@ -10,13 +10,11 @@ provider:
 #  logRetentionInDays: ${file(ServerlessScripts.js):logRetentionInDays.${env:USRV_STAGE}}
 #  environment:
 #    SEND_TO_DATADOG: ON
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - ssm:GetParameter
-#        - ssm:GetParameters
-#        - ssm:GetParametersByPath
-#      Resource: "*"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - comprehend:DetectSentiment
+      Resource: "*"
 plugins:
   - serverless-python-requirements
   - serverless-prune-plugin
@@ -40,9 +38,13 @@ custom:
 #    type: ${file(ServerlessScripts.js):canaryDeploymentType.${env:USRV_STAGE}}
 #    alias: Live
   pythonRequirements:
+#    noDeploy:
+#      - dataclasses
+#      - numpy
     dockerizePip: false
     slim: true
-    pythonBin: python3
+#    pythonBin: python3
+
 
 # you can add packaging information here
 #package:
@@ -51,12 +53,18 @@ custom:
 #    - '!exclude-me-dir/**'
 #    - include-me.py
 #    - include-me-dir/**
+#layers:
+#  twint:
+#    package:
+#      artifact: python.zip
 
 functions:
   checkResources:
     handler: handler.scraping_handler
+#    layers:
+#      - { Ref: TwintLambdaLayer}
     events:
       - httpApi:
           path: /
-          method: get
-    timeout: 30
+          method: post
+    timeout: 29
