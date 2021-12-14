@@ -47,10 +47,10 @@ custom:
 
 
 # you can add packaging information here
-#package:
-#  patterns:
+package:
+  patterns:
 #    - '!exclude-me.py'
-#    - '!exclude-me-dir/**'
+    - '!aws-layer/**'
 #    - include-me.py
 #    - include-me-dir/**
 #layers:
